@@ -1,0 +1,23 @@
+{
+  "name": "todo-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "./node_modules/.bin/serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WMooreMajestic/todo-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WMooreMajestic/todo-app/issues"
+  },
+  "homepage": "https://github.com/WMooreMajestic/todo-app#readme",
+  "devDependencies": {
+    "serve": "^6.4.1"
+  }
+}
