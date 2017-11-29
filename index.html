@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>My Todo App</title>
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div id="edit" style="display: none">
+        <textarea id="edit-review"></textarea>
+        <label>
+            <input id="edit-completed" type="checkbox" /> Completed
+        </label>
+        <button id="edit-save">Save</button>
+        <button id="edit-cancel">Cancel</button>
+    </div>
+
+    <textarea id="inputText" placeholder="Add new item..."></textarea>
+    <button id="addTodoButton">Add</button>
+
+    <ul id="todosList"></ul>
+
+<script src="/js/app.js"></script>
+
+</body>
+
+</html>

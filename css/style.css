@@ -1,0 +1,62 @@
+body {
+    margin: 24px;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  input[placeholder='Add new item...'] {
+    
+  }
+  
+  h1 {
+    margin-top: 0;
+  }
+  
+  ul {
+    padding: 0;
+  }
+  
+  li {
+    list-style: none;
+    margin-bottom: 8px;
+  }
+  
+  li input {
+    margin-left: 0;
+    margin-right: 10px;
+    padding: 20px;
+  }
+  
+  textarea {
+    vertical-align: bottom;
+    box-sizing: border-box;
+  }
+  
+  button {
+    height: 50px;
+    text-transform: uppercase;
+    background: green;
+    border: none;
+    padding: 15px 20px;
+    color: white;
+    cursor: pointer;
+    outline: none;
+  }
+  
+  button.remove {
+    background: darkred;
+  }
+  
+  button.small {
+    height: auto;
+    padding: 3px 8px;
+    margin-left: 10px;
+  }
+  
+  li input:checked + label {
+    text-decoration: line-through;
+  }
+  
+  #inputText {
+    height: 50px;
+  }
