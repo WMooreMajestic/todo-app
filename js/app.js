@@ -53,7 +53,7 @@ with the new details (update page and `todos` array)
 // it would go in this 'anonymous(?)' function to save writing window.onload multiple times.
 
 window.onload = function () {
-    renderTodos(todos, 'todosList');
+    renderTodos(todos, 'todosList'); 
 };
 
  /**
@@ -62,6 +62,7 @@ window.onload = function () {
   * */
 
 var addTodoButton = document.getElementById('addTodoButton'),
+    todosList = document.getElementById('todosList'),
     todos = [
     {
         id: '8320-3823-8526-1026',
@@ -94,6 +95,7 @@ function generateNumber(min, max) {
  * Keeping all event listeners together, making it easy to see what interactivity is attached to the page at a glance
  * */
 
+todosList.addEventListener('click', selectTask);
 addTodoButton.addEventListener('click', function () {
     var todoContent = document.getElementById('inputText').value;
 
@@ -109,7 +111,11 @@ function renderTodos(data, target) {
     var html = "";
 
     for (var i = 0; i < data.length; i++) {
-        html += '<li>' + data[i].content + '</li>';
+        html += '<li><input id="checkBox" type="checkbox"';
+        if (data[i].completed == true) {
+            html += ' checked';
+        }
+        html += '><label>' + data[i].content + '</label><button class="small remove deleteTodo">Delete</button></li>';
     }
 
     document.getElementById(target).innerHTML = html;
@@ -146,4 +152,29 @@ function createTodoObject(content, completed) {
 
 function addToArray(array, objectContent) {
     array.push(objectContent);
+}
+
+function selectTask(e) {
+    var target = e.target;
+    var children = e.target.parentNode.childNodes;
+    var myValue = "";
+
+    for (var i=0; i < children.length; i++) {
+        if (children[i].tagName == "LABEL") {
+            myValue =  children[i].innerText;
+            break;
+        }
+    }
+
+    for (var i=0; i < todos.length; i++) {
+        if (todos[i].content === myValue) {
+            if (target.tagName === 'BUTTON') {
+                todos.splice([i], 1);
+            } else {
+                todos[i].completed = !(todos[i].completed);
+            };
+        }
+    };
+
+    renderTodos(todos, 'todosList');
 }
