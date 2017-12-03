@@ -77,7 +77,7 @@ var addTodoButton = document.getElementById('addTodoButton'),
     {
         id: '6065-6185-8898-814',
         content: 'Book a table at Ask Italian',
-        completed: true,
+        completed: false,
     },
 ];
 
@@ -115,7 +115,7 @@ function renderTodos(data, target) {
         if (data[i].completed == true) {
             html += ' checked';
         }
-        html += '><label>' + data[i].content + '</label><button class="small remove deleteTodo">Delete</button></li>';
+        html += '><label>' + data[i].content + '</label><button class="small editTodo">Edit</button><button class="small remove deleteTodo">Delete</button></li>';
     }
 
     document.getElementById(target).innerHTML = html;
@@ -168,10 +168,13 @@ function selectTask(e) {
 
     for (var i=0; i < todos.length; i++) {
         if (todos[i].content === myValue) {
-            if (target.tagName === 'BUTTON') {
-                todos.splice([i], 1);
+            if (target.tagName === 'BUTTON') { 
+                if (target.classList.contains('deleteTodo')) {
+                    todos.splice([i], 1); // Delete Object
+                }
+                document.getElementById('edit').style.display = "block";
             } else {
-                todos[i].completed = !(todos[i].completed);
+                todos[i].completed = !(todos[i].completed); // Toggle 'completed'
             };
         }
     };
