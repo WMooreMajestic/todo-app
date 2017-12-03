@@ -44,7 +44,25 @@ checked if the todo has `completed` flag set to true
 with the new details (update page and `todos` array)
 */
 
-var todos = [
+ /**
+  * Section: Window Onload
+  * Containing functions that are called when the page has loaded.
+  * */
+
+// Task #1 - Can put this inline but felt that, thinking forward, if there were more than one thing
+// it would go in this 'anonymous(?)' function to save writing window.onload multiple times.
+
+window.onload = function () {
+    renderTodos(todos, 'todosList');
+};
+
+ /**
+  * Section: Global Variables
+  * Variables that can be accessed globally
+  * */
+
+var addTodoButton = document.getElementById('addTodoButton'),
+    todos = [
     {
         id: '8320-3823-8526-1026',
         content: 'Wash the dishes',
@@ -62,9 +80,46 @@ var todos = [
     },
 ];
 
+/**
+ * Section: Utility Functions
+ * Functions that may be useful in multiple instances and are not solely related to the to do app functionality
+ * */
+
 function generateNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
+
+/**
+ * Section: Event Listeners
+ * Keeping all event listeners together, making it easy to see what interactivity is attached to the page at a glance
+ * */
+
+addTodoButton.addEventListener('click', function () {
+    var todoContent = document.getElementById('inputText').value;
+
+    createTodo(todoContent);
+});
+
+/**
+ * Section: Rendering Methods
+ * Some description...
+ * */
+
+function renderTodos(data, target) {
+    var html = "";
+
+    for (var i = 0; i < data.length; i++) {
+        html += '<li>' + data[i].content + '</li>';
+    }
+
+    document.getElementById(target).innerHTML = html;
+    document.querySelector('#inputText').value = "";
+}
+
+/**
+ * Section: Business Logic
+ * The specific functionality that is directly related to maintaining the To do app
+ * */
 
 function generateId() {
     var array = [];
@@ -92,23 +147,3 @@ function createTodoObject(content, completed) {
 function addToArray(array, objectContent) {
     array.push(objectContent);
 }
-
-function renderTodos(data, target) {
-    var html = "";
-
-    for (var i = 0; i < data.length; i++) {
-        html += '<li>' + data[i].content + '</li>';
-        console.log(data[i].id);
-    }
-
-    document.getElementById(target).innerHTML = html;
-    document.querySelector('#inputText').value = "";
-}
-
-var addTodoButton = document.getElementById('addTodoButton');
-
-addTodoButton.addEventListener('click', function () {
-    var todoContent = document.getElementById('inputText').value;
-
-    createTodo(todoContent);
-});
