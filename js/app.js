@@ -62,6 +62,10 @@ window.onload = function () {
   * */
 
 var addTodoButton = document.getElementById('addTodoButton'),
+    editTodoButton = document.getElementById('edit-save'),
+    editCancel = document.getElementById('edit-cancel'),
+    editReview = document.getElementById('edit-review'),
+    edit = document.getElementById('edit'),
     todosList = document.getElementById('todosList'),
     todos = [
     {
@@ -101,6 +105,12 @@ addTodoButton.addEventListener('click', function () {
 
     createTodo(todoContent);
 });
+editTodoButton.addEventListener('click', function () {
+    var todoEditContent = document.getElementById('edit-review').value;
+
+    editTodo(todoEditContent);
+});
+editCancel.addEventListener('click', closeEdit);
 
 /**
  * Section: Rendering Methods
@@ -127,6 +137,10 @@ function renderTodos(data, target) {
  * The specific functionality that is directly related to maintaining the To do app
  * */
 
+ function closeEdit() {
+    edit.style.display = 'none';
+}
+
 function generateId() {
     var array = [];
 
@@ -138,13 +152,18 @@ function generateId() {
 }
 
 function createTodo(content) {
-    addToArray(todos, createTodoObject(content));
+    addToArray(todos, createTodoObject(content, generateId()));
     renderTodos(todos, 'todosList');
 }
 
-function createTodoObject(content, completed) {
+function editTodo(newContent, id, completed, i) {
+    todos.splice( i, 1, createTodoObject(newContent, id, completed));
+    renderTodos(todos, 'todosList');
+}
+
+function createTodoObject(content, id, completed) {
     return {
-        id: generateId(),
+        id: id,
         content: content,
         completed: !!completed
     };
@@ -154,30 +173,54 @@ function addToArray(array, objectContent) {
     array.push(objectContent);
 }
 
-function selectTask(e) {
-    var target = e.target;
-    var children = e.target.parentNode.childNodes;
-    var myValue = "";
-
+function getLabel(children) {
     for (var i=0; i < children.length; i++) {
         if (children[i].tagName == "LABEL") {
-            myValue =  children[i].innerText;
+            return children[i].innerText;
             break;
         }
     }
+}
+
+function selectTask(e) {
+    var target = e.target;
+    var children = e.target.parentNode.childNodes;
+    var taskNo = "";
 
     for (var i=0; i < todos.length; i++) {
-        if (todos[i].content === myValue) {
-            if (target.tagName === 'BUTTON') { 
-                if (target.classList.contains('deleteTodo')) {
-                    todos.splice([i], 1); // Delete Object
-                }
-                document.getElementById('edit').style.display = "block";
-            } else {
-                todos[i].completed = !(todos[i].completed); // Toggle 'completed'
-            };
+        if (todos[i].content === getLabel(children)) {
+            taskNo =  i;
         }
     };
 
-    renderTodos(todos, 'todosList');
+    taskClick(target, taskNo);
+}
+
+
+
+function taskClick(target, i) {
+    if (target.tagName === 'BUTTON') {
+        taskButtons(target, i);
+    } else {
+        completed(todos[i]);
+    }
+
+    renderTodos(todos, 'todosList');  
+}
+
+function taskButtons(target, i) {
+    if (target.classList.contains('deleteTodo')) {
+        todos.splice([i], 1);
+    } else if (target.classList.contains('editTodo')) {
+        edit.style.display = "block";
+    }
+}
+
+// function editTodo (editedContent) {
+//     // createTodoObject (editedContent, todos[i].id, todos[i].completed);
+//     createTodoObject (editedContent); // This will take the 
+// }
+
+function completed(task) {
+    task.completed = !(task.completed);
 }

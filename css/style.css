@@ -60,3 +60,11 @@ body {
   #inputText {
     height: 50px;
   }
+
+  #edit {
+    display: none;
+  } 
+
+  .showEdit {
+    display: block;
+  }
