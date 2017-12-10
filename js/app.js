@@ -234,6 +234,5 @@ function taskButtons(target) {
 
 function closeEdit() {
     editReview.value = "";
-    // document.getElementById('edit-completed').checked = '';
     edit.classList.remove('showEdit');
 }
