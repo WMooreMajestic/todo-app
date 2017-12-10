@@ -2,6 +2,7 @@ body {
     margin: 24px;
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
+    position: relative;
   }
   
   h1 {
@@ -14,7 +15,7 @@ body {
   
   li {
     list-style: none;
-    margin-bottom: 8px;
+    padding: 4px 0;
   }
   
   li input {
@@ -61,9 +62,20 @@ body {
     height: 50px;
   }
 
-  #edit {
+  .edit {
     display: none;
+    position: absolute;
+    left: 50%;
+    border-radius: 8px;
+    border: 1px solid;
+    border-color: lightgrey;
+    padding: 24px;
   } 
+
+  .edit-elements {
+    display: block;
+    margin-bottom: 12px;
+  }
 
   .showEdit {
     display: block;

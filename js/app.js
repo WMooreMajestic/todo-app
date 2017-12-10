@@ -67,6 +67,7 @@ var addTodoButton = document.getElementById('addTodoButton'),
     editReview = document.getElementById('edit-review'),
     edit = document.getElementById('edit'),
     todosList = document.getElementById('todosList'),
+    taskNo = "",
     todos = [
     {
         id: '8320-3823-8526-1026',
@@ -94,6 +95,15 @@ function generateNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+function checked() {
+    var isChecked= document.getElementById('edit-completed').checked;
+    if(isChecked){
+      return true;
+    } else {
+      return false;
+    }
+}
+
 /**
  * Section: Event Listeners
  * Keeping all event listeners together, making it easy to see what interactivity is attached to the page at a glance
@@ -107,8 +117,9 @@ addTodoButton.addEventListener('click', function () {
 });
 editTodoButton.addEventListener('click', function () {
     var todoEditContent = document.getElementById('edit-review').value;
+    var completed = checked();
 
-    editTodo(todoEditContent);
+    editTodo(todoEditContent, completed);
 });
 editCancel.addEventListener('click', closeEdit);
 
@@ -137,10 +148,6 @@ function renderTodos(data, target) {
  * The specific functionality that is directly related to maintaining the To do app
  * */
 
- function closeEdit() {
-    edit.style.display = 'none';
-}
-
 function generateId() {
     var array = [];
 
@@ -156,11 +163,6 @@ function createTodo(content) {
     renderTodos(todos, 'todosList');
 }
 
-function editTodo(newContent, id, completed, i) {
-    todos.splice( i, 1, createTodoObject(newContent, id, completed));
-    renderTodos(todos, 'todosList');
-}
-
 function createTodoObject(content, id, completed) {
     return {
         id: id,
@@ -173,19 +175,10 @@ function addToArray(array, objectContent) {
     array.push(objectContent);
 }
 
-function getLabel(children) {
-    for (var i=0; i < children.length; i++) {
-        if (children[i].tagName == "LABEL") {
-            return children[i].innerText;
-            break;
-        }
-    }
-}
-
+// Recognise when an <li> is clicked on and work out the index number of the entry
 function selectTask(e) {
     var target = e.target;
     var children = e.target.parentNode.childNodes;
-    var taskNo = "";
 
     for (var i=0; i < todos.length; i++) {
         if (todos[i].content === getLabel(children)) {
@@ -196,31 +189,47 @@ function selectTask(e) {
     taskClick(target, taskNo);
 }
 
-
+function getLabel(children) {
+    for (var i=0; i < children.length; i++) {
+        if (children[i].tagName == "LABEL") {
+            return children[i].innerText;
+            break;
+        }
+    }
+}
 
 function taskClick(target, i) {
     if (target.tagName === 'BUTTON') {
-        taskButtons(target, i);
+        taskButtons(target);
     } else {
-        completed(todos[i]);
+        completed(todos[taskNo]);
     }
 
     renderTodos(todos, 'todosList');  
 }
 
-function taskButtons(target, i) {
+function completed(task) {
+    task.completed = !(task.completed);
+}
+
+function editTodo(newContent, completed) {
+    todos[taskNo].content = newContent;
+    todos[taskNo].completed = completed;
+    closeEdit();
+    renderTodos(todos, 'todosList');
+}
+
+// Could this be done with a Switch?
+function taskButtons(target) {
     if (target.classList.contains('deleteTodo')) {
-        todos.splice([i], 1);
+        todos.splice([taskNo], 1);
     } else if (target.classList.contains('editTodo')) {
-        edit.style.display = "block";
+        editReview.value = todos[taskNo].content;
+        edit.classList.add('showEdit');
     }
 }
 
-// function editTodo (editedContent) {
-//     // createTodoObject (editedContent, todos[i].id, todos[i].completed);
-//     createTodoObject (editedContent); // This will take the 
-// }
-
-function completed(task) {
-    task.completed = !(task.completed);
+function closeEdit() {
+    editReview.value = "";
+    edit.classList.remove('showEdit');
 }
