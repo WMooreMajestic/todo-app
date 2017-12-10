@@ -225,11 +225,15 @@ function taskButtons(target) {
         todos.splice([taskNo], 1);
     } else if (target.classList.contains('editTodo')) {
         editReview.value = todos[taskNo].content;
+        if (todos[taskNo].completed != checked()) {
+            document.getElementById('edit-completed').checked = todos[taskNo].completed;
+        }
         edit.classList.add('showEdit');
     }
 }
 
 function closeEdit() {
     editReview.value = "";
+    // document.getElementById('edit-completed').checked = '';
     edit.classList.remove('showEdit');
 }
