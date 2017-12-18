@@ -1,56 +1,20 @@
 /**
 
 # Task 1
-Render `todos` object on page load
+Change your code so that you don't rely on `taskNo` global variable
 
 # Task 2
-Organise your code:
-* All global variables should be declared at the top of the
-file (`todos`, `addTodoButton` and any other global variables 
-you may create later on)
-* Looking at your code it seems like you can split it into
-different sections:
-  * Global variables - all variables declared globally e.g. 
-    DOM references
-  * Utility functions - things not necessarily related to 
-    your todo app e.g. `generateNumber()`
-  * Event listeners - keep all event listeners in one place
-  * Rendering methods - anything related to rendering can be
-    grouped together
-  * Business logic - this is basically everything related to
-    your todo app e.g. adding, removing, updating objects
-    in the `todo` array
- Use comments to create those sections e.g.
- 
- /**
-  * Section: Busines Logic
-  * Some description...
-  * /
+Implement `localStorage` so that you can persist todos after you reload 
+the page
 
 # Task 3
-Add all event listeners so that you can add, mark as done
-and delete todos - make sure your `todos` array represents
-what's on the page at all times
+Add due date:
+    * Update `todos` array so that each object contains `dueDate`
+    * When editing or adding new task you want to display a date input  
+      and store the selected when you save the changes
+    * Display due date next to each task
 
-# Task 4
-* Add 'edit task' button next to each todo item
-* I've added a div to your HTML which contains UI for the 
-edit review functionality
-* When you click 'edit task', show the edit panel and update
-the textarea with the todo content and make the checkbox 
-checked if the todo has `completed` flag set to true
-* When you change content and/or `completed` state and press
-'Save' button, hide the edit panel and update the todo item
-with the new details (update page and `todos` array)
-*/
-
- /**
-  * Section: Window Onload
-  * Containing functions that are called when the page has loaded.
-  * */
-
-// Task #1 - Can put this inline but felt that, thinking forward, if there were more than one thing
-// it would go in this 'anonymous(?)' function to save writing window.onload multiple times.
+ */
 
 window.onload = function () {
     renderTodos(todos, 'todosList'); 
